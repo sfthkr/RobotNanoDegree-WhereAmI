@@ -7,13 +7,13 @@
 
   <!-- Localization-->
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
-    <remap from="scan" to="localize_my_robot/laser/scan"/>
+
 
     <!-- Overall Filter -->
     <param name="min_particles" value="50"/>
-    <param name="max_particles" value="200"/>
-    <param name="update_min_a" value="0.1"/>
-    <param name="update_min_d" value="0.25"/>
+    <param name="max_particles" value="5000"/>
+    <param name="update_min_a" value="0.05"/>
+    <param name="update_min_d" value="0.03"/>
 
     <!-- Laser -->
     <param name="laser_max_beams" value="20"/>
@@ -29,6 +29,11 @@
     <param name="odom_alpha2" value="0.05"/>
     <param name="odom_alpha3" value="0.05"/>
     <param name="odom_alpha4" value="0.05"/>
+	
+    <!-- Define initial pose -->
+    <param name="initial_pose_x" value="0"/>
+    <param name="initial_pose_y" value="0"/>
+    <param name="initial_pose_a" value="-1.5707"/>
   </node>
 
   <!-- Move base -->
@@ -38,10 +43,6 @@
     <rosparam file="$(find localize_my_robot)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find localize_my_robot)/config/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find localize_my_robot)/config/base_local_planner_params.yaml" command="load" />
-
-    <remap from="cmd_vel" to="cmd_vel"/>
-    <remap from="odom" to="odom"/>
-    <remap from="scan" to="localize_my_robot/laser/scan"/>
 
     <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
     <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
